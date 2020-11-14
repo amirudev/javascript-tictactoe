@@ -1,0 +1,17 @@
+body {
+	font-family: arial;
+	text-align: center;
+}
+
+.col {
+	border: 1px solid black;
+	width: 150px;
+	height: 150px;
+	float: left;
+}
+
+.row {
+	clear: both;
+	margin: 0 auto;
+	width: 456px;
+}

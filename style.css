@@ -9,10 +9,21 @@ body {
 	height: 150px;
 	float: left;
 	font-size: 75px;
+	color: white;
 }
 
 .row {
 	clear: both;
 	margin: 0 auto;
 	width: 456px;
+}
+
+.x {
+	background-color: red;
+	border: 1px solid white;
+}
+
+.o {
+	background-color: blue;
+	border: 1px solid white;
 }

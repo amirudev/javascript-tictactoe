@@ -12,30 +12,37 @@ checkArray = (who) => {
 	} else {
 		turn = o;
 	}
-	if (turn.includes('1')){
+	if (turn.includes('1') && (turn.includes('3') || turn.includes('4'))){
 		if (turn.includes('2') && turn.includes('3')){
-			alert(`${who.toUpperCase()} Win`);
+			return `win`;
 		} else if (turn.includes('4') && turn.includes('7')){
-			alert(`${who.toUpperCase()} Win`);
+			return `win`;
 		} else if (turn.includes('5') && turn.includes('9')){
-			alert(`${who.toUpperCase()} Win`);
+			return `win`;
 		}
-	}  else if (turn.includes('9')){
-		if (turn.includes('3') && turn.includes('6')){
-			alert(`${who.toUpperCase()} Win`);
-		} else if (turn.includes('7') && turn.includes('8')){
-			alert(`${who.toUpperCase()} Win`);
+		console.log('turn.includes 1 ');
+	} else if (turn.includes('3') && turn.includes('7')) {
+		if (turn.includes('5')){
+			return `win`;
 		}
+	} else if (turn.includes('9') && (turn.includes('3') || turn.includes('7'))){
+		if (turn.includes('6') && turn.includes('3')){
+			return `win`;
+		} else if (turn.includes('8') && turn.includes('7')){
+			return `win`;
+		}
+		console.log('turn.includes 9 ');
 	} else if (turn.includes('5')){
 		if (turn.includes('2') && turn.includes('8')){
-			alert(`${who.toUpperCase()} Win`);
+			return `win`;
 		} else if (turn.includes('4') && turn.includes('6')){
-			alert(`${who.toUpperCase()} Win`);
+			return `win`;
 		} else if (turn.includes('1') && turn.includes('9')){
-			alert(`${who.toUpperCase()} Win`);
+			return `win`;
 		} else if (turn.includes('3') && turn.includes('7')){
-			alert(`${who.toUpperCase()} Win`);
-		} 
+			return `win`;
+		}
+		console.log('turn.includes 5 ');
 	} else if (x.length >= 5 || o.length >= 5){
 		alert('It\'s a Tie');
 	}
@@ -49,11 +56,15 @@ col_click = () => {
 		event.explicitOriginalTarget.innerHTML = turn;
 		if(turn == 'X'){
 			x.push(event.explicitOriginalTarget.id);
-			checkArray(turn.toLowerCase());
+			if (checkArray(turn.toLowerCase()) == 'win'){
+				alert(`X Win`);
+			}
 			turn = 'O';
 		}else{
 			o.push(event.explicitOriginalTarget.id);
-			checkArray(turn.toLowerCase());
+			if (checkArray(turn.toLowerCase()) == 'win'){
+				alert(`O Win`);
+			}
 			turn = 'X';
 		}
 	}

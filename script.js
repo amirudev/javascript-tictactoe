@@ -82,26 +82,26 @@ tic_AI = () => {
 
 col_click = () => {
 	console.log(event);
-	console.log(event.explicitOriginalTarget.innerHTML);
-	if(event.explicitOriginalTarget.innerHTML.length == 0){
-		event.explicitOriginalTarget.innerHTML = turn;
-		event.explicitOriginalTarget.classList.add(turn.toLowerCase());
+	console.log(event.target.innerHTML);
+	if(event.target.innerHTML.length == 0){
+		event.target.innerHTML = turn;
+		event.target.classList.add(turn.toLowerCase());
 		if (player_versus == 'player'){
 			if(turn == 'X'){
-				x.push(event.explicitOriginalTarget.id);
+				x.push(event.target.id);
 				if (checkArray(turn.toLowerCase()) == 'win'){
 					alert(`X Win`);
 				}
 				turn = 'O';
 			}else{
-				o.push(event.explicitOriginalTarget.id);
+				o.push(event.target.id);
 				if (checkArray(turn.toLowerCase()) == 'win'){
 					alert(`O Win`);
 				}
 				turn = 'X';
 			}
 		} else if (player_versus == 'tic_AI'){
-			x.push(event.explicitOriginalTarget.id);
+			x.push(event.target.id);
 			if (checkArray(turn.toLowerCase()) == 'win'){
 				alert(`X Win`);
 			}

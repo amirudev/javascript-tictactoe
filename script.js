@@ -2,69 +2,80 @@ let turn = 'X';
 var x = new Array();
 var o = new Array();
 let player_versus = 'tic_AI';
+var is_game_over = false;
 
 // checkWin = (id) => {
 // 	if (id == `col_${id+1}`)
 // }
 
-checkArray = (who) => {
-	if (who == 'x'){
-		turn = x;
-	} else {
-		turn = o;
-	}
+checkArray = (turn) => {
 	if (turn.includes('1') && (turn.includes('3') || turn.includes('4'))){
 		if (turn.includes('2') && turn.includes('3')){
+			is_game_over = true;
 			return 'win';
 		} else if (turn.includes('4') && turn.includes('7')){
+			is_game_over = true;
 			return 'win';
 		} else if (turn.includes('5') && turn.includes('9')){
+			is_game_over = true;
 			return 'win';
 		} else if (turn.includes('5') && turn.includes('7')){
+			is_game_over = true;
 			return 'win';
 		} else if (turn.includes('4') && (turn.includes('5') && turn.includes('6'))){
+			is_game_over = true;
 			return 'win';
 		}
 		console.log('turn.includes 1 ');
 	} else if (turn.includes('3') && turn.includes('7')) {
 		if (turn.includes('5')){
+			is_game_over = true;
 			return 'win';
 		}
 	} else if (turn.includes('9') && (turn.includes('3') || turn.includes('7'))){
 		if (turn.includes('6') && turn.includes('3')){
+			is_game_over = true;
 			return 'win';
 		} else if (turn.includes('8') && turn.includes('7')){
+			is_game_over = true;
 			return 'win';
 		} else if (turn.includes('1') && turn.includes('5')){
+			is_game_over = true;
 			return 'win';
 		}
 		console.log('turn.includes 9 ');
 	} else if (turn.includes('5')){
 		if (turn.includes('2') && turn.includes('8')){
+			is_game_over = true;
 			return 'win';
 		} else if (turn.includes('4') && turn.includes('6')){
+			is_game_over = true;
 			return 'win';
 		} else if (turn.includes('1') && turn.includes('9')){
+			is_game_over = true;
 			return 'win';
 		} else if (turn.includes('3') && turn.includes('7')){
+			is_game_over = true;
 			return 'win';
 		}
 		console.log('turn.includes 5 ');
 	} else if (x.length >= 5 || o.length >= 5){
+		is_game_over = true;
 		alert('It\'s a Tie');
 	}
 	console.log(turn);
 }
 
-var check_col;
 tic_AI = () => {
-	apply_col = () => {
+	apply_col = (check_col, random_choose) => {
 		if (check_col.classList.length == 1){
 			check_col.innerHTML = turn;
 			check_col.classList.add(`${turn.toLowerCase()}`);
-			if (checkArray(turn.toLowerCase()) == 'win'){
-				alert(`O Win`);
-			}
+			o.push(`${random_choose}`);
+			console.log(o);
+			if (checkArray(o) == 'win'){
+					alert(`O Win`);
+				}
 			turn = 'X';
 		} else {
 			random_num();
@@ -72,10 +83,12 @@ tic_AI = () => {
 	}
 	random_num = () => {
 		let random_choose = Math.ceil(Math.random()*9);
-		check_col = document.getElementById(random_choose);
+		let check_col = document.getElementById(random_choose);
 		console.log(random_choose);
 		console.log(check_col.classList);
-		apply_col();
+		if (is_game_over == false){
+			apply_col(check_col, random_choose);
+		}
 	}
 	random_num();
 }
@@ -89,20 +102,20 @@ col_click = () => {
 		if (player_versus == 'player'){
 			if(turn == 'X'){
 				x.push(event.target.id);
-				if (checkArray(turn.toLowerCase()) == 'win'){
+				if (checkArray(x) == 'win'){
 					alert(`X Win`);
 				}
 				turn = 'O';
 			}else{
 				o.push(event.target.id);
-				if (checkArray(turn.toLowerCase()) == 'win'){
+				if (checkArray(o) == 'win'){
 					alert(`O Win`);
 				}
 				turn = 'X';
 			}
 		} else if (player_versus == 'tic_AI'){
 			x.push(event.target.id);
-			if (checkArray(turn.toLowerCase()) == 'win'){
+			if (checkArray(x) == 'win'){
 				alert(`X Win`);
 			}
 			turn = 'O';

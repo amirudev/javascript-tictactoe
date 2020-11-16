@@ -25,12 +25,21 @@ checkArray = (turn) => {
 		} else if (turn.includes('4') && (turn.includes('5') && turn.includes('6'))){
 			is_game_over = true;
 			return 'win';
+		} else if (x.length >= 5 || o.length >= 5){
+			is_game_over = true;
+			alert('It\'s a Tie');
 		}
 		console.log('turn.includes 1 ');
 	} else if (turn.includes('3') && turn.includes('7')) {
 		if (turn.includes('5')){
 			is_game_over = true;
 			return 'win';
+		} else if (turn.includes('6')){
+			is_game_over = true;
+			return 'win';
+		} else if (x.length >= 5 || o.length >= 5){
+			is_game_over = true;
+			alert('It\'s a Tie');
 		}
 	} else if (turn.includes('9') && (turn.includes('3') || turn.includes('7'))){
 		if (turn.includes('6') && turn.includes('3')){
@@ -42,6 +51,9 @@ checkArray = (turn) => {
 		} else if (turn.includes('1') && turn.includes('5')){
 			is_game_over = true;
 			return 'win';
+		} else if (x.length >= 5 || o.length >= 5){
+			is_game_over = true;
+			alert('It\'s a Tie');
 		}
 		console.log('turn.includes 9 ');
 	} else if (turn.includes('5')){
@@ -57,6 +69,9 @@ checkArray = (turn) => {
 		} else if (turn.includes('3') && turn.includes('7')){
 			is_game_over = true;
 			return 'win';
+		} else if (x.length >= 5 || o.length >= 5){
+			is_game_over = true;
+			alert('It\'s a Tie');
 		}
 		console.log('turn.includes 5 ');
 	} else if (x.length >= 5 || o.length >= 5){
@@ -78,7 +93,9 @@ tic_AI = () => {
 				}
 			turn = 'X';
 		} else {
-			random_num();
+			if (is_game_over == false){
+				random_num();
+			}
 		}
 	}
 	random_num = () => {
@@ -114,13 +131,15 @@ col_click = () => {
 				turn = 'X';
 			}
 		} else if (player_versus == 'tic_AI'){
-			x.push(event.target.id);
-			if (checkArray(x) == 'win'){
-				alert(`X Win`);
+			if (is_game_over == false){
+				x.push(event.target.id);
+				if (checkArray(x) == 'win'){
+					alert(`X Win`);
+				}
+				turn = 'O';
+				tic_AI();
+				console.log('tic_AI');
 			}
-			turn = 'O';
-			tic_AI();
-			console.log('tic_AI');
 		}
 	}
 }

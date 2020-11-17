@@ -1,7 +1,7 @@
 let turn = 'X';
 var x = new Array();
 var o = new Array();
-let player_versus = 'tac_AI';
+let player_versus = 'tic_AI';
 var is_game_over = false;
 
 // checkWin = (id) => {

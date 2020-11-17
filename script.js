@@ -1,7 +1,7 @@
 let turn = 'X';
 var x = new Array();
 var o = new Array();
-let player_versus = 'tic_AI';
+let player_versus = 'tac_AI';
 var is_game_over = false;
 
 // checkWin = (id) => {
@@ -32,9 +32,6 @@ checkArray = (turn) => {
 		console.log('turn.includes 1 ');
 	} else if (turn.includes('3') && turn.includes('7')) {
 		if (turn.includes('5')){
-			is_game_over = true;
-			return 'win';
-		} else if (turn.includes('6')){
 			is_game_over = true;
 			return 'win';
 		} else if (x.length >= 5 || o.length >= 5){
@@ -111,42 +108,85 @@ tic_AI = () => {
 }
 
 tac_AI = () => {
-	apply_col = (check_col, blocked_col) => {
-
+	apply_col = (blocked_col) => {
+		if (document.getElementById(`${blocked_col}`).classList.length == 1) {
+			let col_block = document.getElementById(`${blocked_col}`);
+			col_block.innerHTML = turn;
+			col_block.classList.add(`${turn.toLowerCase()}`);
+			o.push(`${blocked_col}`);
+			if (checkArray(o) == 'win') {
+				alert('O Win');
+			}
+		}
 	}
 	blocked_num = ()  => {
 		random_num = () => {
-
+			return Math.ceil(Math.random()*9);
 		}
-		if ((x.includes('1') && x.includes('9')) || (x.includes('3') && x.includes('7'))) {
-			if (x.includes('5')){
-				return 5;
+		if ((o.includes('1') && o.includes('9')) || (o.includes('3') && o.includes('7'))) {
+			if (o.includes('5') == false){
+				return '5';
 			} else {
 				random_num();
 			}
-		} else if (x.includes('1') && (x.includes('2') || x.includes('3'))) {
-
-		} else if (x.includes('1') && (x.includes('4') || x.includes('7'))) {
-
-		} else if (x.includes('3') && (x.includes('7') || x.includes('5'))) {
-
-		} else if ((x.includes('9') && x.includes('3')) || (x.includes('9') && x.includes('7'))) {
-
-		} else if (x.includes('5')){
-			if (x.includes('2')){
-
-			} else if(x.includes('4')){
-
-			} else if(x.includes('6')){
-
-			} else if (x.includes('8')) {
-
+		} else if (o.includes('1') && (o.includes('2') || o.includes('3'))) {
+			if (o.includes('2')) {
+				return '3';
+			} else if (o.includes('3')) {
+				return '2';
+			} else {
+				random_num();
+			}
+		} else if (o.includes('1') && (o.includes('4') || o.includes('7'))) {
+			if (o.includes('4')) {
+				return '7';
+			} else if (o.includes('7')) {
+				return '4';
+			} else {
+				random_num();
+			}
+		} else if (o.includes('3') && (o.includes('7') || o.includes('5'))) {
+			if (o.includes('7')) {
+				return '5';
+			} else if (o.includes('5')) {
+				return '7';
+			} else {
+				random_num();
+			}
+		} else if ((o.includes('9') && o.includes('3')) || (o.includes('9') && o.includes('7'))) {
+			if (o.includes('5') == false) {
+				return '5';
+			} else {
+				random_num();
+			}
+		} else if (o.includes('5')){
+			if (o.includes('2')){
+				return '7';
+			} else if(o.includes('4')){
+				return '4';
+			} else if(o.includes('6')){
+				return '6';
+			} else if (o.includes('8')) {
+				return '8';
 			}
 		} else {
 			random_num();
 		}
-	blocked_num();
-	console.log(x);
+	console.log(o);
+	}
+	check_center = (numblock) => {
+		random_num = () => {
+			return numblock = Math.ceil(Math.random()*9);
+		}
+		if (document.getElementById(numblock).classList.length > 1){
+			console.log(`${numblock} Exists`);
+			random_num();
+		} else {
+			console.log('Doesnt Exists');
+			return numblock;
+		}
+	}
+	apply_col(check_center(blocked_num()));
 }
 
 col_click = () => {

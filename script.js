@@ -1,7 +1,7 @@
 let turn = 'X';
 var x = new Array();
 var o = new Array();
-let player_versus = 'tic_AI';
+let player_versus = 'tac_AI';
 var is_game_over = false;
 
 // checkWin = (id) => {
@@ -110,6 +110,45 @@ tic_AI = () => {
 	random_num();
 }
 
+tac_AI = () => {
+	apply_col = (check_col, blocked_col) => {
+
+	}
+	blocked_num = ()  => {
+		random_num = () => {
+
+		}
+		if ((x.includes('1') && x.includes('9')) || (x.includes('3') && x.includes('7'))) {
+			if (x.includes('5')){
+				return 5;
+			} else {
+				random_num();
+			}
+		} else if (x.includes('1') && (x.includes('2') || x.includes('3'))) {
+
+		} else if (x.includes('1') && (x.includes('4') || x.includes('7'))) {
+
+		} else if (x.includes('3') && (x.includes('7') || x.includes('5'))) {
+
+		} else if ((x.includes('9') && x.includes('3')) || (x.includes('9') && x.includes('7'))) {
+
+		} else if (x.includes('5')){
+			if (x.includes('2')){
+
+			} else if(x.includes('4')){
+
+			} else if(x.includes('6')){
+
+			} else if (x.includes('8')) {
+
+			}
+		} else {
+			random_num();
+		}
+	blocked_num();
+	console.log(x);
+}
+
 col_click = () => {
 	console.log(event);
 	console.log(event.target.innerHTML);
@@ -139,6 +178,16 @@ col_click = () => {
 				turn = 'O';
 				tic_AI();
 				console.log('tic_AI');
+			}
+		} else if (player_versus == 'tac_AI'){
+			if (is_game_over == false) {
+				x.push(event.target.id);
+				if (checkArray(x) == 'win') {
+					alert('X Win');
+				}
+				turn = 'O';
+				tac_AI();
+				console.log('tac_AI');
 			}
 		}
 	}

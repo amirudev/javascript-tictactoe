@@ -107,9 +107,11 @@ tic_AI = () => {
 	random_num();
 }
 
+var o_strategy = new Array();
 tac_AI = () => {
 	apply_col = (blocked_col) => {
-		if (document.getElementById(`${blocked_col}`).classList.length == 1) {
+		console.log(`${blocked_col} in apply_col func`);
+		if (document.getElementById(blocked_col).classList.length == 1) {
 			let col_block = document.getElementById(`${blocked_col}`);
 			col_block.innerHTML = turn;
 			col_block.classList.add(`${turn.toLowerCase()}`);
@@ -117,76 +119,156 @@ tac_AI = () => {
 			if (checkArray(o) == 'win') {
 				alert('O Win');
 			}
+			turn = 'X';
+		} else {
+			check_center();
 		}
 	}
 	blocked_num = ()  => {
 		random_num = () => {
-			return Math.ceil(Math.random()*9);
+			console.log('Randoming Number from Blocked Num')
+			let num = Math.ceil(Math.random()*9);
+			console.log(num);
+			return num;
 		}
-		if ((o.includes('1') && o.includes('9')) || (o.includes('3') && o.includes('7'))) {
-			if (o.includes('5') == false){
-				return '5';
+		if (o_strategy.includes('1')) {
+			if (o_strategy.includes('2')) {
+				if (!o_strategy.includes('3')) {
+					o_strategy = [];
+					return '3';
+				} else {
+					random_num();
+				}
+			} else if (o_strategy.includes('4')) {
+				if (!o_strategy.includes('7')) {
+					o_strategy = [];
+					return '7';
+				} else {
+					random_num();
+				}
+			} else if (o_strategy.includes('3')) {
+				if (!o_strategy.includes('2')) {
+					o_strategy = [];
+					return '2';
+				} else {
+					random_num();
+				}
+			} else if (o_strategy.includes('7')) {
+				if (!o_strategy.includes('4')) {
+					o_strategy = [];
+					return '4';
+				} else {
+					random_num();
+				}
+			} else if (o_strategy.includes('5')) {
+				if (!o_strategy.includes('9')) {
+					o_strategy = [];
+					return '9';
+				} else {
+					random_num();
+				}
 			} else {
-				random_num();
+				return random_num();
 			}
-		} else if (o.includes('1') && (o.includes('2') || o.includes('3'))) {
-			if (o.includes('2')) {
-				return '3';
-			} else if (o.includes('3')) {
-				return '2';
+		} else if (o_strategy.includes('5')) {
+			if (o_strategy.includes('2')) {
+				if (!o_strategy.includes('8')) {
+					o_strategy = [];
+					return '8';
+				} else {
+					random_num();
+				}
+			} else if (o_strategy.includes('3')) {
+				if (!o_strategy.includes('7')) {
+					o_strategy = [];
+					return '7';
+				} else {
+					random_num();
+				}
+			} else if (o_strategy.includes('4')) {
+				if (!o_strategy.includes('6')) {
+					o_strategy = [];
+					return '6';
+				} else {
+					random_num();
+				}
+			} else if (o_strategy.includes('6')) {
+				if (!o_strategy.includes('4')) {
+					o_strategy = [];
+					return '4';
+				} else {
+					random_num();
+				}
+			} else if (o_strategy.includes('7')) {
+				if (!o_strategy.includes('3')) {
+					o_strategy = [];
+					return '3';
+				} else {
+					random_num();
+				}
+			} else if (o_strategy.includes('8')) {
+				if (!o_strategy.includes('2')) {
+					o_strategy = [];
+					return '2';
+				} else {
+					random_num();
+				}
 			} else {
-				random_num();
+				return random_num();
 			}
-		} else if (o.includes('1') && (o.includes('4') || o.includes('7'))) {
-			if (o.includes('4')) {
-				return '7';
-			} else if (o.includes('7')) {
-				return '4';
+		} else if (o_strategy.includes('9')) {
+			if (o_strategy.includes('6')) {
+				if (!o_strategy.includes('3')) {
+					o_strategy = [];
+					return '3';
+				} else {
+					random_num();
+				}
+			} else if (o_strategy.includes('8')) {
+				if (!o_strategy.includes('7')) {
+					o_strategy = [];
+					return '7';
+				} else {
+					random_num();
+				}
+			} else if (o_strategy.includes('3')) {
+				if (!o_strategy.includes('6')) {
+					o_strategy = [];
+					return '6';
+				} else {
+					random_num();
+				}
+			} else if (o_strategy.includes('7')) {
+				if (!o_strategy.includes('8')) {
+					o_strategy = [];
+					return '8';
+				} else {
+					random_num();
+				}
 			} else {
-				random_num();
-			}
-		} else if (o.includes('3') && (o.includes('7') || o.includes('5'))) {
-			if (o.includes('7')) {
-				return '5';
-			} else if (o.includes('5')) {
-				return '7';
-			} else {
-				random_num();
-			}
-		} else if ((o.includes('9') && o.includes('3')) || (o.includes('9') && o.includes('7'))) {
-			if (o.includes('5') == false) {
-				return '5';
-			} else {
-				random_num();
-			}
-		} else if (o.includes('5')){
-			if (o.includes('2')){
-				return '7';
-			} else if(o.includes('4')){
-				return '4';
-			} else if(o.includes('6')){
-				return '6';
-			} else if (o.includes('8')) {
-				return '8';
+				return random_num();
 			}
 		} else {
-			random_num();
+			console.log('Not finding match array')
+			return random_num();
 		}
-	console.log(o);
 	}
 	check_center = (numblock) => {
-		random_num = () => {
-			return numblock = Math.ceil(Math.random()*9);
-		}
-		if (document.getElementById(numblock).classList.length > 1){
-			console.log(`${numblock} Exists`);
-			random_num();
-		} else {
-			console.log('Doesnt Exists');
-			return numblock;
+		if (is_game_over == false){
+			if (numblock == undefined){
+				numblock = Math.ceil(Math.random()*9);
+			}
+			var randomednum = numblock;
+			if (document.getElementById(randomednum).classList.length > 1){
+				console.log(`${randomednum} Exists`);
+				apply_col(Math.ceil(Math.random()*9));
+			} else {
+				console.log(`${randomednum} Doesnt Exists`);
+				apply_col(randomednum);
+			}
 		}
 	}
-	apply_col(check_center(blocked_num()));
+check_center(blocked_num());
 }
 
 col_click = () => {
@@ -222,6 +304,7 @@ col_click = () => {
 		} else if (player_versus == 'tac_AI'){
 			if (is_game_over == false) {
 				x.push(event.target.id);
+				o_strategy.push(event.target.id);
 				if (checkArray(x) == 'win') {
 					alert('X Win');
 				}

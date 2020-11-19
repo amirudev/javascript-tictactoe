@@ -272,45 +272,47 @@ check_center(blocked_num());
 }
 
 col_click = () => {
-	console.log(event);
-	console.log(event.target.innerHTML);
-	if(event.target.innerHTML.length == 0){
-		event.target.innerHTML = turn;
-		event.target.classList.add(turn.toLowerCase());
-		if (player_versus == 'player'){
-			if(turn == 'X'){
-				x.push(event.target.id);
-				if (checkArray(x) == 'win'){
-					alert(`X Win`);
+	if (is_game_over == false) {
+		console.log(event);
+		console.log(event.target.innerHTML);
+		if(event.target.innerHTML.length == 0){
+			event.target.innerHTML = turn;
+			event.target.classList.add(turn.toLowerCase());
+			if (player_versus == 'player'){
+				if(turn == 'X'){
+					x.push(event.target.id);
+					if (checkArray(x) == 'win'){
+						alert(`X Win`);
+					}
+					turn = 'O';
+				}else{
+					o.push(event.target.id);
+					if (checkArray(o) == 'win'){
+						alert(`O Win`);
+					}
+					turn = 'X';
 				}
-				turn = 'O';
-			}else{
-				o.push(event.target.id);
-				if (checkArray(o) == 'win'){
-					alert(`O Win`);
+			} else if (player_versus == 'tic_AI'){
+				if (is_game_over == false){
+					x.push(event.target.id);
+					if (checkArray(x) == 'win'){
+						alert(`X Win`);
+					}
+					turn = 'O';
+					tic_AI();
+					console.log('tic_AI');
 				}
-				turn = 'X';
-			}
-		} else if (player_versus == 'tic_AI'){
-			if (is_game_over == false){
-				x.push(event.target.id);
-				if (checkArray(x) == 'win'){
-					alert(`X Win`);
+			} else if (player_versus == 'tac_AI'){
+				if (is_game_over == false) {
+					x.push(event.target.id);
+					o_strategy.push(event.target.id);
+					if (checkArray(x) == 'win') {
+						alert('X Win');
+					}
+					turn = 'O';
+					tac_AI();
+					console.log('tac_AI');
 				}
-				turn = 'O';
-				tic_AI();
-				console.log('tic_AI');
-			}
-		} else if (player_versus == 'tac_AI'){
-			if (is_game_over == false) {
-				x.push(event.target.id);
-				o_strategy.push(event.target.id);
-				if (checkArray(x) == 'win') {
-					alert('X Win');
-				}
-				turn = 'O';
-				tac_AI();
-				console.log('tac_AI');
 			}
 		}
 	}

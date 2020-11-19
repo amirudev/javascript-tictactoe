@@ -1,6 +1,7 @@
 body {
 	font-family: arial;
 	text-align: center;
+	position: relative;
 }
 
 .col {
@@ -26,4 +27,28 @@ body {
 .o {
 	background-color: blue;
 	border: 1px solid white;
+}
+
+#popup-level {
+	position: absolute;
+	width: 400px;
+	top: 100px;
+	left: 400px;
+	margin: 0 auto;
+	padding: 50px;
+	background-color: white;
+	box-shadow: black 10px 10px;
+}
+
+#popup-level #name-box {
+	font-size: 30px;
+}
+
+#popup-level #level-box {
+	margin: 60px 0;
+}
+
+#popup-level #level-box span {
+	border: 1px solid black;
+	padding: 50px;
 }

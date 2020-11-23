@@ -4,6 +4,11 @@ body {
 	position: relative;
 }
 
+.game-board {
+	width: 456px;
+	margin: 0 auto;
+}
+
 .col {
 	border: 1px solid black;
 	width: 150px;
@@ -15,8 +20,6 @@ body {
 
 .row {
 	clear: both;
-	margin: 0 auto;
-	width: 456px;
 }
 
 .x {
@@ -37,7 +40,7 @@ body {
 	margin: 0 auto;
 	padding: 50px;
 	background-color: white;
-	box-shadow: black 10px 10px;
+	box-shadow: black 5px 5px 6px;
 }
 
 #popup-level #name-box {
@@ -49,6 +52,23 @@ body {
 }
 
 #popup-level #level-box span {
+	box-sizing: border-box;
 	border: 1px solid black;
 	padding: 50px;
+}
+
+#popup-level #level-box span:active {
+	background-color: salmon;
+}
+
+.hide {
+	display: none;
+}
+
+#retry_button {
+	clear: both;
+	width: 456px;
+	height: 50px;
+	border: 1px solid black;
+	background-color: lightcyan;
 }

@@ -1,8 +1,22 @@
-let turn = 'X';
+var turn = 'X';
 var x = new Array();
 var o = new Array();
-let player_versus = 'tac_AI';
+var player_versus = 'tac_AI';
 var is_game_over = false;
+
+level_click = () => {
+	let player_enemy = event.target.attributes.name.value;
+	if (player_enemy == 'human'){
+		player_versus = 'player';
+	} else if (player_enemy == 'AI - Easy') {
+		player_versus = 'tic_AI';
+	} else if (player_enemy == 'AI - Medium') {
+		player_versus = 'tac_AI';
+	} else {
+		player_versus = 'player';
+	}
+	document.getElementById('popup-level').classList.add('hide');
+}
 
 // checkWin = (id) => {
 // 	if (id == `col_${id+1}`)
@@ -28,6 +42,7 @@ checkArray = (turn) => {
 		} else if (x.length >= 5 || o.length >= 5){
 			is_game_over = true;
 			alert('It\'s a Tie');
+			document.getElementById('retry_button').classList.toggle('hide');
 		}
 		console.log('turn.includes 1 ');
 	} else if (turn.includes('3') && turn.includes('7')) {
@@ -37,6 +52,7 @@ checkArray = (turn) => {
 		} else if (x.length >= 5 || o.length >= 5){
 			is_game_over = true;
 			alert('It\'s a Tie');
+			document.getElementById('retry_button').classList.toggle('hide');
 		}
 	} else if (turn.includes('9') && (turn.includes('3') || turn.includes('7'))){
 		if (turn.includes('6') && turn.includes('3')){
@@ -51,6 +67,7 @@ checkArray = (turn) => {
 		} else if (x.length >= 5 || o.length >= 5){
 			is_game_over = true;
 			alert('It\'s a Tie');
+			document.getElementById('retry_button').classList.toggle('hide');
 		}
 		console.log('turn.includes 9 ');
 	} else if (turn.includes('5')){
@@ -69,11 +86,13 @@ checkArray = (turn) => {
 		} else if (x.length >= 5 || o.length >= 5){
 			is_game_over = true;
 			alert('It\'s a Tie');
+			document.getElementById('retry_button').classList.toggle('hide');
 		}
 		console.log('turn.includes 5 ');
 	} else if (x.length >= 5 || o.length >= 5){
 		is_game_over = true;
 		alert('It\'s a Tie');
+		document.getElementById('retry_button').classList.toggle('hide');
 	}
 	console.log(turn);
 }
@@ -87,6 +106,7 @@ tic_AI = () => {
 			console.log(o);
 			if (checkArray(o) == 'win'){
 					alert(`O Win`);
+					document.getElementById('retry_button').classList.toggle('hide');
 				}
 			turn = 'X';
 		} else {
@@ -118,6 +138,7 @@ tac_AI = () => {
 			o.push(`${blocked_col}`);
 			if (checkArray(o) == 'win') {
 				alert('O Win');
+				document.getElementById('retry_button').classList.toggle('hide');
 			}
 			turn = 'X';
 		} else {
@@ -279,41 +300,73 @@ col_click = () => {
 			event.target.innerHTML = turn;
 			event.target.classList.add(turn.toLowerCase());
 			if (player_versus == 'player'){
-				if(turn == 'X'){
-					x.push(event.target.id);
-					if (checkArray(x) == 'win'){
-						alert(`X Win`);
-					}
-					turn = 'O';
-				}else{
+				if (turn == 'O') {
 					o.push(event.target.id);
 					if (checkArray(o) == 'win'){
 						alert(`O Win`);
+						document.getElementById('retry_button').classList.toggle('hide');
 					}
 					turn = 'X';
-				}
-			} else if (player_versus == 'tic_AI'){
-				if (is_game_over == false){
+				} else {
 					x.push(event.target.id);
 					if (checkArray(x) == 'win'){
 						alert(`X Win`);
+						document.getElementById('retry_button').classList.toggle('hide');
 					}
 					turn = 'O';
-					tic_AI();
-					console.log('tic_AI');
+				}
+			} else if (player_versus == 'tic_AI'){
+				if (is_game_over == false) {
+					if (turn == 'O') {
+						turn = 'X';
+						tic_AI();
+						console.log('tic_AI');
+					} else {
+						x.push(event.target.id);
+						if (checkArray(x) == 'win'){
+							alert(`X Win`);
+							document.getElementById('retry_button').classList.toggle('hide');
+						}
+						turn = 'O';
+						tic_AI();
+						console.log('tic_AI');
+					}
 				}
 			} else if (player_versus == 'tac_AI'){
+				console.log('Enemy : tac_AI');
 				if (is_game_over == false) {
-					x.push(event.target.id);
-					o_strategy.push(event.target.id);
-					if (checkArray(x) == 'win') {
-						alert('X Win');
+					if (turn == 'O') {
+						turn = 'X';
+						tac_AI();
+						console.log('tac_AI');
+					} else {
+						x.push(event.target.id);
+						o_strategy.push(event.target.id);
+						if (checkArray(x) == 'win') {
+							alert('X Win');
+							document.getElementById('retry_button').classList.toggle('hide');
+						}
+						turn = 'O';
+						tac_AI();
 					}
-					turn = 'O';
-					tac_AI();
-					console.log('tac_AI');
 				}
 			}
 		}
 	}
+}
+
+retry_button = () => {
+	let retry_el = document.getElementsByClassName('col');
+	for (var i = retry_el.length - 1; i >= 0; i--) {
+		if (retry_el[i].classList.length >= 2) {
+			retry_el[i].classList.remove('x');
+			retry_el[i].classList.remove('o');
+			retry_el[i].innerHTML = '';
+			x = [];
+			o = [];
+			document.getElementById('retry_button').classList.toggle('hide');
+		}
+	}
+	is_game_over = false;
+	turn = 'X';
 }

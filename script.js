@@ -364,9 +364,9 @@ retry_button = () => {
 			retry_el[i].innerHTML = '';
 			x = [];
 			o = [];
-			document.getElementById('retry_button').classList.toggle('hide');
 		}
 	}
 	is_game_over = false;
 	turn = 'X';
+	document.getElementById('retry_button').classList.toggle('hide');
 }

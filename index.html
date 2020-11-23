@@ -6,20 +6,33 @@
 </head>
 <body>
 	<h1>Tic Tac Toe</h1>
-	<div class="row">
-		<div class="col" id="1" onclick="col_click();"></div>
-		<div class="col" id="2" onclick="col_click();"></div>
-		<div class="col" id="3" onclick="col_click();"></div>
+	<div class="game-board">
+		<div class="row">
+			<div class="col" id="1" onclick="col_click();"></div>
+			<div class="col" id="2" onclick="col_click();"></div>
+			<div class="col" id="3" onclick="col_click();"></div>
+		</div>
+		<div class="row">
+			<div class="col" id="4" onclick="col_click();"></div>
+			<div class="col" id="5" onclick="col_click();"></div>
+			<div class="col" id="6" onclick="col_click();"></div>
+		</div>
+		<div class="row">
+			<div class="col" id="7" onclick="col_click();"></div>
+			<div class="col" id="8" onclick="col_click();"></div>
+			<div class="col" id="9" onclick="col_click();"></div>
+		</div>
 	</div>
-	<div class="row">
-		<div class="col" id="4" onclick="col_click();"></div>
-		<div class="col" id="5" onclick="col_click();"></div>
-		<div class="col" id="6" onclick="col_click();"></div>
+	<div id="popup-level">
+		<div id="name-box">Choose Your Enemy</div>
+		<div id="level-box">
+			<span name="human" onclick="level_click();">A</span>
+			<span name="AI - Easy" onclick="level_click();">B</span>
+			<span name="AI - Medium" onclick="level_click();">C</span>
+		</div>
 	</div>
-	<div class="row">
-		<div class="col" id="7" onclick="col_click();"></div>
-		<div class="col" id="8" onclick="col_click();"></div>
-		<div class="col" id="9" onclick="col_click();"></div>
+	<div class="retry">
+		<button onclick="retry_button();" id="retry_button" class="hide">Retry</button>
 	</div>
 	<script type="text/javascript" src="script.js"></script>
 </body>

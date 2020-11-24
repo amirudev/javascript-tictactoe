@@ -68,24 +68,30 @@ checkArray = (turn) => {
 	}
 }
 
-// Check the column is it column empty
-getColumnInformation = (column) => {
-	let getColumn = document.getElementById(column);
-	if (getColumn.classList.length == 1) {
-		return getColumn;
-	}
-}
-
 // Generate random number between 0 - 9
 numberRandomer = () => {
 	return Math.ceil(Math.random()*9);
 }
 
+// Check the column is it column empty
+getColumnInformation = (column) => {
+	let getColumn = document.getElementById(column);
+	console.log(getColumn);
+	if (getColumn.classList.length == 1) {
+		console.log('Success get information');
+		return getColumn;
+	} else {
+		return getColumnInformation(numberRandomer());
+	}
+}
+
+// Apply AI to the column
 columnApplier = (columnInformation) => {
 	columnInformation.innerHTML = turn;
 	columnInformation.classList.add(`${turn.toLowerCase()}`);
 }
 
+// Check matches Array
 checkIfPlayerWin = (turn) => {
 	let isPlayerWin = checkArray(turn);
 	if (isPlayerWin == 'win'){
@@ -99,24 +105,15 @@ checkIfPlayerWin = (turn) => {
 	}
 }
 
+// AI working on caliing function
 easyAI = () => {
-	apply_col = () => {
-		let columnInformation = getColumnInformation(numberRandomer());
-		console.log(columnInformation);
-		if (columnInformation.classList.length == 1){
-			// Add javascript error handle here if column is > 1
-			columnApplier(columnInformation);
-			o.push(`${columnInformation.id}`);
-			checkIfPlayerWin('o')
-			turn = 'X';
-		} else {
-			if (is_game_over == false){
-				numberRandomer();
-			}
-		}
+	let randomColumn = getColumnInformation(numberRandomer()); // get random number and check is column empty
+	if (randomColumn.classList.length == 1){
+		columnApplier(randomColumn); // Apply results to column
+		o.push(`${randomColumn.id}`); // adds number column to array
+		checkIfPlayerWin('o'); // Check is bot win
+		turn = 'X'; // Turn game player
 	}
-	apply_col();
-	console.log('Goes here 114');
 }
 
 // var o_strategy = new Array();

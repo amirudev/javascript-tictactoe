@@ -1,100 +1,83 @@
 var turn = 'X';
 var x = new Array();
 var o = new Array();
-var player_versus = 'tac_AI';
+var player_versus = 'player';
 var is_game_over = false;
 
-level_click = () => {
-	let player_enemy = event.target.attributes.name.value;
-	if (player_enemy == 'human'){
-		player_versus = 'player';
-	} else if (player_enemy == 'AI - Easy') {
-		player_versus = 'tic_AI';
-	} else if (player_enemy == 'AI - Medium') {
-		player_versus = 'tac_AI';
+levelChooser = (nameEnemy) => {
+	let playerEnemy;
+	if (nameEnemy == 'human'){
+		playerEnemy = 'player';
+	} else if (nameEnemy == 'AI - Easy') {
+		playerEnemy = 'tic_AI';
+	} else if (nameEnemy == 'AI - Medium') {
+		playerEnemy = 'tac_AI';
 	} else {
-		player_versus = 'player';
+		playerEnemy = 'player';
 	}
-	document.getElementById('popup-level').classList.add('hide');
+	document.getElementById('popup-level').classList.toggle('hide');
+	return playerEnemy;
 }
 
-// checkWin = (id) => {
-// 	if (id == `col_${id+1}`)
-// }
+playerChooseLevel = () => {
+	player_versus = levelChooser(event.target.attributes.name.value);
+}
 
 checkArray = (turn) => {
+	console.log(`value of O : ${o}`);
+	console.log(`value of X : ${x}`);
 	if (turn.includes('1') && (turn.includes('3') || turn.includes('4'))){
 		if (turn.includes('2') && turn.includes('3')){
-			is_game_over = true;
 			return 'win';
 		} else if (turn.includes('4') && turn.includes('7')){
-			is_game_over = true;
 			return 'win';
 		} else if (turn.includes('5') && turn.includes('9')){
-			is_game_over = true;
 			return 'win';
 		} else if (turn.includes('5') && turn.includes('7')){
-			is_game_over = true;
 			return 'win';
 		} else if (turn.includes('4') && (turn.includes('5') && turn.includes('6'))){
-			is_game_over = true;
 			return 'win';
 		} else if (x.length >= 5 || o.length >= 5){
-			is_game_over = true;
-			alert('It\'s a Tie');
-			document.getElementById('retry_button').classList.toggle('hide');
+			console.log('Goes here 41');
+			return 'tie';
 		}
-		console.log('turn.includes 1 ');
 	} else if (turn.includes('3') && turn.includes('7')) {
 		if (turn.includes('5')){
-			is_game_over = true;
 			return 'win';
 		} else if (x.length >= 5 || o.length >= 5){
-			is_game_over = true;
-			alert('It\'s a Tie');
-			document.getElementById('retry_button').classList.toggle('hide');
+			console.log('Goes here 48');
+			return 'tie';
 		}
 	} else if (turn.includes('9') && (turn.includes('3') || turn.includes('7'))){
 		if (turn.includes('6') && turn.includes('3')){
-			is_game_over = true;
 			return 'win';
 		} else if (turn.includes('8') && turn.includes('7')){
-			is_game_over = true;
 			return 'win';
 		} else if (turn.includes('1') && turn.includes('5')){
-			is_game_over = true;
 			return 'win';
 		} else if (x.length >= 5 || o.length >= 5){
-			is_game_over = true;
-			alert('It\'s a Tie');
-			document.getElementById('retry_button').classList.toggle('hide');
+			console.log('Goes here 59');
+			return 'tie';
 		}
-		console.log('turn.includes 9 ');
 	} else if (turn.includes('5')){
 		if (turn.includes('2') && turn.includes('8')){
-			is_game_over = true;
 			return 'win';
 		} else if (turn.includes('4') && turn.includes('6')){
-			is_game_over = true;
 			return 'win';
 		} else if (turn.includes('1') && turn.includes('9')){
-			is_game_over = true;
 			return 'win';
 		} else if (turn.includes('3') && turn.includes('7')){
-			is_game_over = true;
 			return 'win';
 		} else if (x.length >= 5 || o.length >= 5){
-			is_game_over = true;
-			alert('It\'s a Tie');
-			document.getElementById('retry_button').classList.toggle('hide');
+			console.log('Goes here 72');
+			return 'tie';
 		}
-		console.log('turn.includes 5 ');
 	} else if (x.length >= 5 || o.length >= 5){
-		is_game_over = true;
-		alert('It\'s a Tie');
-		document.getElementById('retry_button').classList.toggle('hide');
+		console.log('Goes here 76');
+		return 'tie';
+	} else {
+		console.log('Goes here 79');
 	}
-	console.log(turn);
 }
 
 tic_AI = () => {
@@ -103,11 +86,16 @@ tic_AI = () => {
 			check_col.innerHTML = turn;
 			check_col.classList.add(`${turn.toLowerCase()}`);
 			o.push(`${random_choose}`);
-			console.log(o);
-			if (checkArray(o) == 'win'){
-					alert(`O Win`);
-					document.getElementById('retry_button').classList.toggle('hide');
-				}
+			let isPlayerWin = checkArray(o);
+			if (isPlayerWin == 'win'){
+				alert(`O Win`);
+				is_game_over = true;
+				document.getElementById('retry_button').classList.toggle('hide');
+			} else if (isPlayerWin == 'tie') {
+				alert('It\'s a Tie')
+				is_game_over = true;
+				document.getElementById('retry_button').classList.toggle('hide');
+			}
 			turn = 'X';
 		} else {
 			if (is_game_over == false){
@@ -118,19 +106,17 @@ tic_AI = () => {
 	random_num = () => {
 		let random_choose = Math.ceil(Math.random()*9);
 		let check_col = document.getElementById(random_choose);
-		console.log(random_choose);
-		console.log(check_col.classList);
 		if (is_game_over == false){
 			apply_col(check_col, random_choose);
 		}
 	}
 	random_num();
+	console.log('Goes here 114');
 }
 
 var o_strategy = new Array();
 tac_AI = () => {
 	apply_col = (blocked_col) => {
-		console.log(`${blocked_col} in apply_col func`);
 		if (document.getElementById(blocked_col).classList.length == 1) {
 			let col_block = document.getElementById(`${blocked_col}`);
 			col_block.innerHTML = turn;
@@ -138,6 +124,7 @@ tac_AI = () => {
 			o.push(`${blocked_col}`);
 			if (checkArray(o) == 'win') {
 				alert('O Win');
+				is_game_over = true;
 				document.getElementById('retry_button').classList.toggle('hide');
 			}
 			turn = 'X';
@@ -147,9 +134,7 @@ tac_AI = () => {
 	}
 	blocked_num = ()  => {
 		random_num = () => {
-			console.log('Randoming Number from Blocked Num')
 			let num = Math.ceil(Math.random()*9);
-			console.log(num);
 			return num;
 		}
 		if (o_strategy.includes('1')) {
@@ -234,6 +219,13 @@ tac_AI = () => {
 				} else {
 					random_num();
 				}
+			} else if (o_strategy.includes('9')) {
+				if (!o_strategy.includes('5')) {
+					o_strategy = [];
+					return '1';
+				} else {
+					random_num();
+				}
 			} else {
 				return random_num();
 			}
@@ -270,7 +262,6 @@ tac_AI = () => {
 				return random_num();
 			}
 		} else {
-			console.log('Not finding match array')
 			return random_num();
 		}
 	}
@@ -281,10 +272,8 @@ tac_AI = () => {
 			}
 			var randomednum = numblock;
 			if (document.getElementById(randomednum).classList.length > 1){
-				console.log(`${randomednum} Exists`);
 				apply_col(Math.ceil(Math.random()*9));
 			} else {
-				console.log(`${randomednum} Doesnt Exists`);
 				apply_col(randomednum);
 			}
 		}
@@ -294,8 +283,6 @@ check_center(blocked_num());
 
 col_click = () => {
 	if (is_game_over == false) {
-		console.log(event);
-		console.log(event.target.innerHTML);
 		if(event.target.innerHTML.length == 0){
 			event.target.innerHTML = turn;
 			event.target.classList.add(turn.toLowerCase());
@@ -304,6 +291,7 @@ col_click = () => {
 					o.push(event.target.id);
 					if (checkArray(o) == 'win'){
 						alert(`O Win`);
+						is_game_over = true;
 						document.getElementById('retry_button').classList.toggle('hide');
 					}
 					turn = 'X';
@@ -311,6 +299,7 @@ col_click = () => {
 					x.push(event.target.id);
 					if (checkArray(x) == 'win'){
 						alert(`X Win`);
+						is_game_over = true;
 						document.getElementById('retry_button').classList.toggle('hide');
 					}
 					turn = 'O';
@@ -318,32 +307,38 @@ col_click = () => {
 			} else if (player_versus == 'tic_AI'){
 				if (is_game_over == false) {
 					if (turn == 'O') {
-						turn = 'X';
 						tic_AI();
-						console.log('tic_AI');
+						turn = 'X';
+						console.log('Goes here 307');
 					} else {
 						x.push(event.target.id);
-						if (checkArray(x) == 'win'){
+						let isPlayerWin = checkArray(x);
+						if (isPlayerWin == 'win'){
 							alert(`X Win`);
+							is_game_over = true;
 							document.getElementById('retry_button').classList.toggle('hide');
+						} else if (isPlayerWin == 'tie') {
+							alert(`It\'s a Tie`);
+							is_game_over = true;
+							document.getElementById('retry_button').classList.toggle('hide');
+							console.log('Goes here 321');
 						}
 						turn = 'O';
 						tic_AI();
-						console.log('tic_AI');
+						console.log('Goes here 322');
 					}
 				}
 			} else if (player_versus == 'tac_AI'){
-				console.log('Enemy : tac_AI');
 				if (is_game_over == false) {
 					if (turn == 'O') {
 						turn = 'X';
 						tac_AI();
-						console.log('tac_AI');
 					} else {
 						x.push(event.target.id);
 						o_strategy.push(event.target.id);
 						if (checkArray(x) == 'win') {
 							alert('X Win');
+							is_game_over = true;
 							document.getElementById('retry_button').classList.toggle('hide');
 						}
 						turn = 'O';
